@@ -35,6 +35,7 @@ in
     enable = true;
     userName = "Sharad Vikram";
     userEmail = "sharad.vikram@gmail.com";
+    extraConfig.core.editor = "vim";
   };
 
   # This value determines the Home Manager release that your
