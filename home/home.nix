@@ -124,6 +124,7 @@ in
     xorg.xdpyinfo
     betterlockscreen
     gimp
+    bind
   ];
   fonts.fontconfig.enable = true;
 
