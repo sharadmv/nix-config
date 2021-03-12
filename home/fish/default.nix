@@ -15,6 +15,9 @@ programs.fish = {
       };
     }
   ];
+  promptInit = ''
+  any-nix-shell fish --info-right | source
+  '';
 };
 
 xdg.configFile."fish/functions".source = ./functions;

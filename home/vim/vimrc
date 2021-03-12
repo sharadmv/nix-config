@@ -1,6 +1,12 @@
 au BufRead,BufNewFile *.nix set filetype=nix
 
 let mapleader = ","
+set autochdir
+set number relativenumber
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
 
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
@@ -15,3 +21,4 @@ let NERDTreeQuitOnOpen = 1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 colorscheme molokai
+

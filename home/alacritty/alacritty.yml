@@ -1,0 +1,19 @@
+import:
+- /path/to/dracula.yml
+env:
+  TERM: xterm-256color
+
+font:
+  normal:
+    family: JetBrainsMono NerdFont
+    style: Regular
+
+  bold:
+    family: JetBrainsMono NerdFont
+    style: Bold
+
+  italic:
+    family: JetBrainsMono NerdFont
+    style: Italic
+
+background_opacity: 0.7

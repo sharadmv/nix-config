@@ -6,6 +6,8 @@
 
 let
   rtl8812au = config.boot.kernelPackages.callPackage drivers/wifi/rtl8812au.nix {};
+  sddm-theme = pkgs.callPackage dm/theme.nix {};
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in
 {
   imports =
@@ -30,37 +32,12 @@ in
   # replicates the default behaviour.
   networking.enableIPv6 = false;
   networking.networkmanager.enable = true;
-  networking.wireless = {
-    enable = false;
-    networks = {
-      "Lilypad 3.0" = {
-        psk="oskilovers";
-      };
-    };
-  };
   networking.hostName = "rocinante";
   networking.useDHCP = false;
   networking.interfaces.enp3s0.useDHCP = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
-
-  
-
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound.
   sound.enable = true;
@@ -74,13 +51,17 @@ in
   users.users.sharad = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  programs.nm-applet.enable = true;
+  programs.fish.enable = true;
+  programs.steam.enable = true;
+
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with unstable; [
     git
     wget
     vim
@@ -91,23 +72,43 @@ in
     inxi
     powerline-fonts
     python38
+    feh
+    sddm-theme
+    qt5.qtgraphicaleffects
+    papirus-icon-theme
+    gnome3.adwaita-icon-theme
+    gmrun
+    adwaita-qt
+    gnome3.adwaita-icon-theme
+    hicolor-icon-theme
+    qgnomeplatform
+    qt5.qtwayland
   ];
 
-  programs.nm-applet.enable = true;
-  programs.fish.enable = true;
-  programs.steam.enable = true;
-
   fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override { fonts = [ "JetBrainsMono" "FantasqueSansMono" "Iosevka" "Hermit" ]; })
+    noto-fonts
+    noto-fonts-emoji
+    noto-fonts-cjk
+    comfortaa
+    dejavu_fonts
   ];
 
   services.xserver = {
     enable = true;
-    desktopManager = {
-      xterm.enable = false;
-      xfce.enable = true;
+    displayManager.sddm.enable = true;
+    displayManager.sddm.theme = "deepin";
+    displayManager.defaultSession = "my-xmonad";
+    libinput = {
+      enable = true;
     };
-    displayManager.defaultSession = "xfce";
+    displayManager.session = [
+      {
+        manage = "desktop";
+        name = "my-xmonad";
+        start = ''exec $HOME/.xsession'';
+      }
+    ];
 
     videoDrivers = ["nvidia"];
   };
@@ -121,13 +122,15 @@ in
   # };
 
   # List services that you want to enable:
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.ports = [ 322 ];
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 8000 8080 8888 3000 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
