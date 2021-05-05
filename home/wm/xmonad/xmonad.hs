@@ -96,6 +96,8 @@ myKeys =
   , ((0, xF86XK_AudioPause), spawn "exe=`playerctl play-pause`")
   , ((0, xF86XK_AudioNext), spawn "exe=`playerctl next`")
   , ((0, xF86XK_AudioPrev), spawn "exe=`playerctl previous`")
+  , ((0, xK_Print), spawn "exe=`maim ~/Pictures/screenshot-$(date +%s).png; notify-send \"maim\" \"Took a screenshot!\"`")
+  , ((controlMask, xK_Print), spawn "exe=`maim -s | xclip -selection clipboard -t image/png; notify-send \"maim\" \"Screenshot copied to clipboard!\"`")
   , ((controlMask .|. shiftMask, xK_Down), lowerVolume 5 >> return ())
   , ((controlMask .|. shiftMask, xK_m), toggleMute >> return ())
   , ((modm .|. shiftMask, xK_l), spawn "exe=`betterlockscreen -l`")

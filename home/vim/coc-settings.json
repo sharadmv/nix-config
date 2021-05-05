@@ -1,0 +1,15 @@
+{
+  "python.formatting.provider": "flake8",
+  "python.jediEnabled": true,
+  "python.linting.pytypeEnabled": true,
+  "python.pythonPath": "python",
+  "pyright.enable": true,
+  "languageserver": {
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "filetypes": ["haskell", "lhaskell"]
+    }
+  }
+}

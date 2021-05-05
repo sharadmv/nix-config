@@ -71,7 +71,6 @@ in
     pciutils
     inxi
     powerline-fonts
-    python38
     feh
     sddm-theme
     qt5.qtgraphicaleffects
@@ -112,6 +111,7 @@ in
 
     videoDrivers = ["nvidia"];
   };
+
   
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -4,6 +4,9 @@ let
   user = "sharad";
 in
 let
+  myPythonPackages = ps: with ps; [
+  ];
+  myPython = pkgs.python39.withPackages myPythonPackages;
   homeDir = "/home/${user}";
   configDir = "config";
   myVim = (pkgs.callPackage ./vim {});
@@ -11,6 +14,7 @@ let
   myFonts = pkgs.callPackage ./fonts { inherit pkgs; };
   myRofi = (pkgs.callPackage ./wm/rofi {});
   myPicom = (pkgs.callPackage ./wm/picom {});
+  dex = pkgs.callPackage ../../workspace/hack/dex-lang { };
   laptopBar = pkgs.callPackage wm/polybar/bar.nix {
     font0 = 10;
     font1 = 12;
@@ -43,8 +47,13 @@ in
   ];
 
 
-  programs.home-manager.enable = true;
-  programs.rofi.enable = true;
+  nixpkgs.overlays = [
+    (self: super: {
+      discord = super.discord.overrideAttrs (_: {
+        src = builtins.fetchTarball "https://discordapp.com/api/download?platform=linux&format=tar.gz";
+      });
+    })
+  ];
 
   xsession = {
     enable = true;
@@ -85,54 +94,80 @@ in
   blur-strength = 8;
   blur-background = true;
   blur-background-fixed = true;
+  blur-background-exclude = [
+    "class_g = 'slop'"
+  ];
+  shadow-exclude = [
+    "class_g *?= 'slop'"
+  ];
   '';
+
+  xdg.configFile."nvim/coc-settings.json".text = builtins.readFile ./vim/coc-settings.json;
 
 
   home.packages = with pkgs; [
-    unzip
-    alacritty
-    libnotify
-    firefox
     _1password
-    htop
-    fortune
-    myVim
-    fish
-    myXMonad
-    pavucontrol
-    pasystray
-    xorg.xkill
+    alacritty
+    any-nix-shell
+    bat
+    betterlockscreen
+    bind
+    cava
+    dex
     discord
-    myRofi
-    zoom-us
-    gnome3.networkmanagerapplet
+    firefox
+    fish
     font-awesome-ttf
+    fortune
+    fzf
+    gimp
+    gnome3.cheese
     gnome3.gnome-calendar
+    gnome3.gnome-screenshot
+    gnome3.networkmanagerapplet
+    haskell-language-server
+    htop
+    jq
+    libnotify
+    lmms
+    maim
     material-design-icons
     myFonts.icomoon-feather
-    xmonad-log
-    spotify
     myPicom
-    cava
-    any-nix-shell
-    maim
-    xclip
+    myPython
+    myRofi
+    myVim
+    myXMonad
     neofetch
+    nodejs
+    pasystray
+    pavucontrol
     playerctl
+    ripgrep
+    sl
+    spotify
+    unity3d
+    unityhub
+    unzip
     vlc
     xautolock
+    xclip
+    xmonad-log
     xorg.xdpyinfo
-    betterlockscreen
-    gimp
-    bind
+    xorg.xkill
+    zoom-us
   ];
+
   fonts.fontconfig.enable = true;
 
+  programs.home-manager.enable = true;
+  programs.rofi.enable = true;
   programs.git = {
     enable = true;
     userName = "Sharad Vikram";
     userEmail = "sharad.vikram@gmail.com";
     extraConfig.core.editor = "vim";
+    extraConfig.init.defaultBranch = "main";
   };
 
 
