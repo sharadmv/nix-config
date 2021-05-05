@@ -6,12 +6,13 @@ in
 let
   homeDir = "/home/${user}";
   configDir = "config";
+
   myVim = (pkgs.callPackage ./vim {});
   myXMonad = (pkgs.callPackage ./wm/xmonad {});
   myFonts = pkgs.callPackage ./fonts { inherit pkgs; };
   myRofi = (pkgs.callPackage ./wm/rofi {});
   myPicom = (pkgs.callPackage ./wm/picom {});
-  dex = pkgs.callPackage ../../workspace/hack/dex-lang { };
+
   laptopBar = pkgs.callPackage wm/polybar/bar.nix {
     font0 = 10;
     font1 = 12;
@@ -43,6 +44,14 @@ in
     statusBar
   ];
 
+  home.packages = import ./packages.nix {
+    fonts = myFonts;
+    picom = myPicom;
+    pkgs = pkgs;
+    rofi = myRofi;
+    vim = myVim;
+    xmonad = myXMonad;
+  };
 
   nixpkgs.overlays = [
     (self: super: {
@@ -62,7 +71,7 @@ in
       package = pkgs.vanilla-dmz;
     };
     initExtra = polybarOpts + ''
-    ${myPicom}/bin/picom &
+    ${myPicom.picom}/bin/picom &
     '';
   };
 
@@ -99,58 +108,6 @@ in
   ];
   '';
 
-  home.packages = with pkgs; [
-    _1password
-    alacritty
-    any-nix-shell
-    bat
-    betterlockscreen
-    bind
-    cava
-    dex
-    discord
-    firefox
-    fish
-    font-awesome-ttf
-    fortune
-    fzf
-    gimp
-    gnome3.cheese
-    gnome3.gnome-calendar
-    gnome3.gnome-screenshot
-    gnome3.networkmanagerapplet
-    haskell-language-server
-    htop
-    jq
-    libnotify
-    lmms
-    maim
-    material-design-icons
-    myFonts.icomoon-feather
-    myPicom
-    myRofi
-    myVim
-    myXMonad
-    neofetch
-    nodejs
-    pasystray
-    pavucontrol
-    playerctl
-    ripgrep
-    sl
-    spotify
-    unity3d
-    unityhub
-    unzip
-    vlc
-    xautolock
-    xclip
-    xmonad-log
-    xorg.xdpyinfo
-    xorg.xkill
-    zoom-us
-  ];
-
   fonts.fontconfig.enable = true;
 
   programs.home-manager.enable = true;
@@ -163,14 +120,5 @@ in
     extraConfig.init.defaultBranch = "main";
   };
 
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "21.03";
 }

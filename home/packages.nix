@@ -1,0 +1,54 @@
+{ pkgs, fonts, picom, rofi, vim, xmonad }:
+let
+  dex = pkgs.callPackage ../../workspace/hack/dex-lang { };
+with pkgs; [
+    _1password
+    alacritty
+    any-nix-shell
+    bat
+    betterlockscreen
+    bind
+    cava
+    dex
+    discord
+    firefox
+    fish
+    font-awesome-ttf
+    fonts.icomoon-feather
+    fortune
+    fzf
+    gimp
+    gnome3.cheese
+    gnome3.gnome-calendar
+    gnome3.gnome-screenshot
+    gnome3.networkmanagerapplet
+    haskell-language-server
+    htop
+    jq
+    libnotify
+    lmms
+    maim
+    material-design-icons
+    neofetch
+    nodejs
+    pasystray
+    pavucontrol
+    picom
+    playerctl
+    ripgrep
+    rofi
+    sl
+    spotify
+    unity3d
+    unityhub
+    unzip
+    vim
+    vlc
+    xautolock
+    xclip
+    xmonad
+    xmonad-log
+    xorg.xdpyinfo
+    xorg.xkill
+    zoom-us
+]
