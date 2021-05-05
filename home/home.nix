@@ -4,9 +4,6 @@ let
   user = "sharad";
 in
 let
-  myPythonPackages = ps: with ps; [
-  ];
-  myPython = pkgs.python39.withPackages myPythonPackages;
   homeDir = "/home/${user}";
   configDir = "config";
   myVim = (pkgs.callPackage ./vim {});
@@ -102,9 +99,6 @@ in
   ];
   '';
 
-  xdg.configFile."nvim/coc-settings.json".text = builtins.readFile ./vim/coc-settings.json;
-
-
   home.packages = with pkgs; [
     _1password
     alacritty
@@ -134,7 +128,6 @@ in
     material-design-icons
     myFonts.icomoon-feather
     myPicom
-    myPython
     myRofi
     myVim
     myXMonad

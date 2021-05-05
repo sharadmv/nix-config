@@ -11,4 +11,6 @@ in
     extraConfig = builtins.readFile ../vim/vimrc;
     plugins = plugins;
   };
+
+  xdg.configFile."nvim/coc-settings.json".text = builtins.readFile ../vim/coc-settings.json;
 }
