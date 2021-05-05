@@ -22,7 +22,6 @@ with pkgs.vimPlugins;
   sensible
   vim-beancount
   vim-gitgutter
-  vim-rooter
   vim-highlightedyank
   vim-lastplace
   vim-nix
