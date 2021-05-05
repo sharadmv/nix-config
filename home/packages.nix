@@ -1,6 +1,7 @@
 { pkgs, fonts, picom, rofi, vim, xmonad }:
 let
   dex = pkgs.callPackage ../../workspace/hack/dex-lang { };
+in
 with pkgs; [
     _1password
     alacritty

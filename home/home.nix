@@ -71,7 +71,7 @@ in
       package = pkgs.vanilla-dmz;
     };
     initExtra = polybarOpts + ''
-    ${myPicom.picom}/bin/picom &
+    ${myPicom}/bin/picom &
     '';
   };
 
