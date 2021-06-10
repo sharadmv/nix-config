@@ -6,11 +6,11 @@ with pkgs; [
     _1password
     alacritty
     any-nix-shell
+    arandr
     bat
     betterlockscreen
     bind
     cava
-    dex
     discord
     firefox
     fish
@@ -23,9 +23,11 @@ with pkgs; [
     gnome3.gnome-calendar
     gnome3.gnome-screenshot
     gnome3.networkmanagerapplet
+    google-chrome
     haskell-language-server
     htop
     jq
+    killall
     libnotify
     lmms
     maim
@@ -38,6 +40,7 @@ with pkgs; [
     playerctl
     ripgrep
     rofi
+    service-wrapper
     sl
     spotify
     unity3d

@@ -1,5 +1,7 @@
 " ## Important settings
 let mapleader = ","
+map ; :
+noremap ;; ;
 
 " ## Miscellaneous settings
 set encoding=utf-8

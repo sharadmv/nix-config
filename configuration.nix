@@ -62,11 +62,11 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with unstable; [
+    (pkgs.steam.override { extraLibraries = pkgs: [ pkgs.pipewire ]; })
     git
     wget
     vim
     tmux
-    google-chrome
     gnumake
     pciutils
     inxi
