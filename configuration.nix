@@ -16,6 +16,7 @@ in
     ];
 
   # Use the systemd-boot EFI boot loader.
+  boot.plymouth.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -73,28 +74,33 @@ in
   programs.steam.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.packageOverrides = (super: {
+  #  steam = (super.steam.override {
+  #    extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
+  #  });
+  #});
+
   environment.systemPackages = with unstable; [
-    #(steam.override { extraProfile = ''unset VK_ICD_FILENAMES''; }) # TODO: Remove override when https://github.com/NixOS/nixpkgs/issues/108598#issuecomment-853489577 is fixed.
-    steam-run
-    git
-    wget
-    vim
-    tmux
-    gnumake
-    pciutils
-    inxi
-    powerline-fonts
-    feh
-    sddm-theme
-    qt5.qtgraphicaleffects
-    papirus-icon-theme
-    gnome3.adwaita-icon-theme
-    gmrun
     adwaita-qt
+    feh
+    git
+    gmrun
     gnome3.adwaita-icon-theme
+    gnome3.adwaita-icon-theme
+    gnumake
     hicolor-icon-theme
+    inxi
+    papirus-icon-theme
+    pciutils
+    powerline-fonts
     qgnomeplatform
+    qt5.qtgraphicaleffects
     qt5.qtwayland
+    sddm-theme
+    steam-run-native
+    tmux
+    vim
+    wget
   ];
 
   fonts.fonts = with pkgs; [
@@ -109,26 +115,25 @@ in
   services.xserver = {
     enable = true;
     desktopManager = {
-      #xterm.enable = false;
-      #xfce.enable = true;
+      xterm.enable = false;
+      xfce.enable = true;
     };
     displayManager = {
       sddm = {
         enable = true;
         theme = "deepin";
       };
-      #defaultSession = "xfce";
+      lightdm = {
+        enable = false;
+      };
+      defaultSession = "my-xmonad";
       session = [
-        {
-          manage = "desktop";
-          name = "my-xmonad";
-          start = ''exec $HOME/.xsession'';
-        }
+      {
+        manage = "desktop";
+        name = "my-xmonad";
+        start = ''exec $HOME/.xsession-xmonad'';
+      }
       ];
-    };
-    desktopManager = {
-      #xterm.enable = false;
-      #xfce.enable = true;
     };
     libinput = {
       enable = true;
@@ -136,14 +141,13 @@ in
     videoDrivers = ["nvidia"];
   };
 
+  # nix-direnv config
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
+
   
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
   powerManagement = { 
     enable = true; 
     cpuFreqGovernor = "ondemand"; 

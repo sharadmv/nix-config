@@ -15,8 +15,9 @@ programs.fish = {
       };
     }
   ];
-  promptInit = ''
+  interactiveShellInit = ''
   any-nix-shell fish --info-right | source
+  direnv hook fish | source
   '';
 };
 

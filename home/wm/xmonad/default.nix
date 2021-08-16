@@ -1,3 +1,3 @@
 { pkgs ? import <nixpkgs> {} }:
 
-pkgs.callPackage ./xmonad.nix {}
+pkgs.haskellPackages.callPackage ./my-xmonad.nix {}

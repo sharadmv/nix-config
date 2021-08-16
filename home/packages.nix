@@ -4,6 +4,7 @@ let
 in
 with pkgs; [
     _1password
+    _1password-gui
     alacritty
     any-nix-shell
     arandr
@@ -12,6 +13,9 @@ with pkgs; [
     bind
     cava
     discord
+    (dwarf-fortress-packages.dwarf-fortress-full.override {
+      theme = "spacefox";
+    })
     firefox
     fish
     font-awesome-ttf
@@ -20,12 +24,15 @@ with pkgs; [
     fzf
     gimp
     gnome3.cheese
+    gnome3.seahorse
     gnome3.gnome-calendar
     gnome3.gnome-screenshot
     gnome3.networkmanagerapplet
     google-chrome
+    gping
     haskell-language-server
     htop
+    imagemagick
     jq
     killall
     libnotify
@@ -37,6 +44,7 @@ with pkgs; [
     nodejs
     pasystray
     pavucontrol
+    pdftk
     picom
     playerctl
     pyright

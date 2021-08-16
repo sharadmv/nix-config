@@ -1,0 +1,6 @@
+require('plugins.autocomplete')
+require('plugins.treesitter')
+require('plugins.blankline')
+require('plugins.gitsigns')
+require('plugins.tree')
+require('plugins.telescope')

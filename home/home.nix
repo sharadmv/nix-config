@@ -63,6 +63,7 @@ in
 
   xsession = {
     enable = true;
+    scriptPath = ".xsession-xmonad";
     windowManager.command = "xmonad";
     preferStatusNotifierItems = true;
     pointerCursor = {
@@ -75,11 +76,16 @@ in
     '';
   };
 
-  services.screen-locker = {
-    enable = true;
-    lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l";
-    enableDetectSleep = true;
-    inactiveInterval = 20;
+  services = {
+    screen-locker = {
+      enable = true;
+      lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l";
+      xautolock = {
+        detectSleep = true;
+      };
+      inactiveInterval = 20;
+    };
+    gnome-keyring.enable = true;
   };
 
   home.homeDirectory = homeDir;
@@ -87,6 +93,9 @@ in
   home.file.".config/xmonad/build".source = ./wm/xmonad/build;
   home.file = {
     ".face.icon".source = ./wallpapers/bird.png;
+  };
+  home.file = {
+    ".face".source = ./wallpapers/bird.png;
   };
   home.file = {
     ".config/htop/htoprc".source = ./htop/htoprc;
@@ -110,14 +119,20 @@ in
 
   fonts.fontconfig.enable = true;
 
-  programs.home-manager.enable = true;
-  programs.rofi.enable = true;
-  programs.git = {
-    enable = true;
-    userName = "Sharad Vikram";
-    userEmail = "sharad.vikram@gmail.com";
-    extraConfig.core.editor = "vim";
-    extraConfig.init.defaultBranch = "main";
+  programs = {
+    home-manager.enable = true;
+    rofi.enable = true;
+    git = {
+      enable = true;
+      userName = "Sharad Vikram";
+      userEmail = "sharad.vikram@gmail.com";
+      extraConfig.core.editor = "vim";
+      extraConfig.init.defaultBranch = "main";
+    };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 
   home.stateVersion = "21.03";

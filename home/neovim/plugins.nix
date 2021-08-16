@@ -1,30 +1,13 @@
 { pkgs, ... }:
 let
-  jupytext-vim = pkgs.vimUtils.buildVimPlugin  {
-    name = "jupytext.vim";
-    src = pkgs.fetchFromGitHub {
-      owner = "goerz";
-      repo = "jupytext.vim";
-      rev = "v0.1.2";
-      sha256 = "1kgh6iqh5yc536mxbhj6c1412zm2c7cn8si4v5kcv0imb8v14s0w";
-    };
-  };
-  nvim-lspfuzzy = pkgs.vimUtils.buildVimPlugin  {
-    name = "nvim-lspfuzzy";
-    src = pkgs.fetchFromGitHub {
-      owner = "ojroques";
-      repo = "nvim-lspfuzzy";
-      rev = "b8653dd8ecf6c10c96a06dba6bc5ef71ff72abb6";
-      sha256 = "17g5xx7vblvksr58pa8p54cdia6n1cz7g44xhdkj8nay08dvasyv";
-    };
-  };
   gitsigns-nvim = pkgs.vimUtils.buildVimPlugin  {
-    name = "gitsigns-nvim";
+    pname = "gitsigns-nvim";
+    version = "2021-10-30";
     src = pkgs.fetchFromGitHub {
       owner = "lewis6991";
       repo = "gitsigns.nvim";
-      rev = "main";
-      sha256 = "0vrb900p2rc323axb93hc7jwcxg8455zwqsvxm9vkd2mcsdpn33w";
+      rev = "d12442a924dc431467149f1fcb33e1c648116803";
+      sha256 = "0gpnp3vp0418hhjlwdawxc7slyh6p8pmdvycjm6rmyr0xjxx7ipm";
     };
     configurePhase = ''
     echo skip
@@ -38,12 +21,12 @@ let
   };
   plenary-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "plenary-nvim";
-    version = "2021-08-13";
+    version = "2021-10-30";
     src = pkgs.fetchFromGitHub {
       owner = "nvim-lua";
       repo = "plenary.nvim";
-      rev = "0b78fe699b9049b8f46942664027b32102979832";
-      sha256 = "16ghyvnsqdrfkjb7hawcvwrx56v6llnq4zziw4z1811j4n1v6ypa";
+      rev = "96e821e8001c21bc904d3c15aa96a70c11462c5f";
+      sha256 = "0y05pwc4kbjqgj1zjjhvmrll3d53wz55zgqavxd4bvj2gwhvnd2k";
     };
     meta.homepage = "https://github.com/nvim-lua/plenary.nvim/";
     buildInputs = with pkgs; [
@@ -55,12 +38,12 @@ let
   };
   telescope-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "telescope-nvim";
-    version = "2021-08-13";
+    version = "2021-10-30";
     src = pkgs.fetchFromGitHub {
       owner = "nvim-telescope";
       repo = "telescope.nvim";
-      rev = "f1a27baf279976845eb43c65e99a71d7f0f92d02";
-      sha256 = "069r1pkg82zj7fm55gk21va2f2x2jmrknfwld5bp0py344gh65n1";
+      rev = "d7f09f58954495d1373f3a400596b2fed71a8d1c";
+      sha256 = "1gvr4fxpj7cz0jl4qcvpprh72asjsvlkpl0q3c4gdz9q7n2ar9aw";
     };
     meta.homepage = "https://github.com/nvim-telescope/telescope.nvim/";
     buildInputs = with pkgs; [
@@ -71,15 +54,17 @@ let
     '';
   };
   dex-vim = pkgs.vimUtils.buildVimPlugin  {
-    name = "dex-vim";
+    pname = "dex-vim";
     src = ../../../workspace/hack/dex-vim;
   };
 in
 with pkgs.vimPlugins;
 [
   ayu-vim
+  fzf-vim
   gitsigns-nvim
   indent-blankline-nvim
+  kommentary
   nvim-compe
   nvim-lspconfig
   nvim-tree-lua
@@ -87,8 +72,8 @@ with pkgs.vimPlugins;
   nvim-web-devicons
   plenary-nvim
   telescope-nvim
+  vim-beancount
   vim-nix
   vista-vim
-  fzf-vim
 ]
 
