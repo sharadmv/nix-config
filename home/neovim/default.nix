@@ -1,16 +1,24 @@
 { pkgs ? import <nixpkgs> {}, ... }:
 
 let
-  plugins = (import ../vim/plugins.nix pkgs);
+  plugins = (import ./plugins.nix pkgs);
 in
 {
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+    }))
+  ];
   programs.neovim = {
     enable = true;
     withPython3 = true;
     vimAlias = true;
-    extraConfig = builtins.readFile ../vim/vimrc;
+    extraConfig = ''
+      lua << EOF
+
+      ${builtins.readFile ./lua/init.lua}
+      EOF
+    '';
     plugins = plugins;
   };
-
-  xdg.configFile."nvim/coc-settings.json".text = builtins.readFile ../vim/coc-settings.json;
 }
