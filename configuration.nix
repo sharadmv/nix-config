@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs, ... }:
 
 let
   rtl8812au = config.boot.kernelPackages.callPackage drivers/wifi/rtl8812au.nix {};
@@ -42,16 +42,28 @@ in
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  virtualisation.docker.enable = true;
+
+  # Enable vulkan
+  hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.enable = true;
+  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+  hardware.opengl.setLdLibraryPath = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   nix.allowedUsers = [ "@wheel" ];
+  nix.useSandbox = false;
   users.users.sharad = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" "networkmanager" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "docker" "dialout" ];
+    packages = with pkgs; [
+      vulkan-tools
+      lutris
+    ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -62,7 +74,8 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with unstable; [
-    (pkgs.steam.override { extraLibraries = pkgs: [ pkgs.pipewire ]; })
+    #(steam.override { extraProfile = ''unset VK_ICD_FILENAMES''; }) # TODO: Remove override when https://github.com/NixOS/nixpkgs/issues/108598#issuecomment-853489577 is fixed.
+    steam-run
     git
     wget
     vim
@@ -95,20 +108,31 @@ in
 
   services.xserver = {
     enable = true;
-    displayManager.sddm.enable = true;
-    displayManager.sddm.theme = "deepin";
-    displayManager.defaultSession = "my-xmonad";
+    desktopManager = {
+      #xterm.enable = false;
+      #xfce.enable = true;
+    };
+    displayManager = {
+      sddm = {
+        enable = true;
+        theme = "deepin";
+      };
+      #defaultSession = "xfce";
+      session = [
+        {
+          manage = "desktop";
+          name = "my-xmonad";
+          start = ''exec $HOME/.xsession'';
+        }
+      ];
+    };
+    desktopManager = {
+      #xterm.enable = false;
+      #xfce.enable = true;
+    };
     libinput = {
       enable = true;
     };
-    displayManager.session = [
-      {
-        manage = "desktop";
-        name = "my-xmonad";
-        start = ''exec $HOME/.xsession'';
-      }
-    ];
-
     videoDrivers = ["nvidia"];
   };
 
@@ -120,6 +144,11 @@ in
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+  powerManagement = { 
+    enable = true; 
+    cpuFreqGovernor = "ondemand"; 
+  };
+  #powerManagement.powertop.enable = true;
 
   # List services that you want to enable:
   hardware.bluetooth.enable = true;

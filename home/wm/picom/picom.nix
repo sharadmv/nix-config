@@ -25,7 +25,7 @@ stdenv.mkDerivation {
     deepClone = true;
     url = "https://github.com/ibhagwan/picom.git";
     rev = "60eb00ce1b52aee46d343481d0530d5013ab850b";
-    sha256 = "1lmb8khmpwn9z9xr4d90xzbljm7lym091jbmgfq0k419kbpq6daq";
+    sha256 = "1y8v0capq7gjsl2zjj5dnn8f4a8da6kss73sc16ldq0hl4hivvs4";
   };
   preConfigure = ''
   git submodule update --init --recursive

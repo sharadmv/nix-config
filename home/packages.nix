@@ -32,20 +32,23 @@ with pkgs; [
     lmms
     maim
     material-design-icons
+    ncdu
     neofetch
     nodejs
     pasystray
     pavucontrol
     picom
     playerctl
+    rclone
     ripgrep
     rofi
     service-wrapper
     sl
     spotify
-    unity3d
-    unityhub
     unzip
+    wineWowPackages.staging
+    # winetricks and other programs depending on wine need to use the same wine version
+    (winetricks.override { wine = wineWowPackages.staging; })
     vim
     vlc
     xautolock
