@@ -23,7 +23,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "lewis6991";
       repo = "gitsigns.nvim";
-      rev = "main";
+      rev = "5655cfa4c0316943c7da641f813e79a91bc0d87e";
       sha256 = "0vrb900p2rc323axb93hc7jwcxg8455zwqsvxm9vkd2mcsdpn33w";
     };
     configurePhase = ''
@@ -78,6 +78,7 @@ in
 with pkgs.vimPlugins;
 [
   ayu-vim
+  fzf-vim
   gitsigns-nvim
   indent-blankline-nvim
   nvim-compe
@@ -87,8 +88,8 @@ with pkgs.vimPlugins;
   nvim-web-devicons
   plenary-nvim
   telescope-nvim
+  vim-beancount
   vim-nix
   vista-vim
-  fzf-vim
 ]
 

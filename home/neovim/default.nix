@@ -6,7 +6,7 @@ in
 {
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/7a899330a1acd9ed6b3783cdecd256105e408a20.tar.gz;
     }))
   ];
   programs.neovim = {

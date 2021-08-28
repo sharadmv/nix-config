@@ -24,6 +24,7 @@ with pkgs; [
     gnome3.gnome-screenshot
     gnome3.networkmanagerapplet
     google-chrome
+    gping
     haskell-language-server
     htop
     jq

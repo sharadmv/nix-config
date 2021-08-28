@@ -1,5 +1,9 @@
 module Main where
 
+import Control.Monad
+import Data.Maybe
+import Data.List 
+
 import Graphics.X11.ExtraTypes.XF86  
 
 import XMonad
@@ -7,7 +11,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.Volume
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen, fullscreenEventHook)
 import XMonad.Hooks.FadeInactive (fadeInactiveLogHook)
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Circle
@@ -40,6 +44,20 @@ myLayoutHook = id
     delta = 3/100
 
 myLogHook = fadeInactiveLogHook 0.9
+
+-- Fullscreen settings
+setFullscreenSupported :: X ()
+setFullscreenSupported = addSupported ["_NET_WM_STATE", "_NET_WM_STATE_FULLSCREEN"]
+
+addSupported :: [String] -> X ()
+addSupported props = withDisplay $ \dpy -> do
+    r <- asks theRoot
+    a <- getAtom "_NET_SUPPORTED"
+    newSupportedList <- mapM (fmap fromIntegral . getAtom) props
+    io $ do
+      supportedList <- fmap (join . maybeToList) $ getWindowProperty32 dpy a r
+      changeProperty32 dpy r a aTOM propModeReplace (nub $ newSupportedList ++ supportedList)
+
 ------------------------------------------------------------------------
 -- Polybar settings (needs DBus client).
 --
@@ -108,10 +126,11 @@ main = mkDbusClient >>= main'
 
 main' dbus = xmonad $
        docks $
-       ewmh $ def 
+       ewmhFullscreen $ ewmh $ def 
          { modMask = modm
          , terminal = myTerminal
          , handleEventHook = handleEventHook def <+> fullscreenEventHook
          , layoutHook = myLayoutHook
          , logHook = myPolybarLogHook dbus
+         --, startupHook = setFullscreenSupported
          } `additionalKeys` myKeys

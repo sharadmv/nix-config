@@ -63,6 +63,7 @@ in
 
   xsession = {
     enable = true;
+    scriptPath = ".xsession-xmonad";
     windowManager.command = "xmonad";
     preferStatusNotifierItems = true;
     pointerCursor = {
@@ -87,6 +88,9 @@ in
   home.file.".config/xmonad/build".source = ./wm/xmonad/build;
   home.file = {
     ".face.icon".source = ./wallpapers/bird.png;
+  };
+  home.file = {
+    ".face".source = ./wallpapers/bird.png;
   };
   home.file = {
     ".config/htop/htoprc".source = ./htop/htoprc;

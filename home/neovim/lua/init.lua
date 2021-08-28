@@ -12,6 +12,9 @@ end
 
 -- General options
 
+cmd([[
+filetype plugin indent on
+]])
 
 vim.api.nvim_set_keymap('', ';', ':', { silent = true })
 vim.api.nvim_set_keymap('n', ';;', ';', { noremap = true, silent = true })
@@ -37,6 +40,19 @@ map('n', '<C-h>', '<C-w><C-h>')
 map('n', '<C-j>', '<C-w><C-j>')
 map('n', '<C-k>', '<C-w><C-k>')
 map('n', '<C-l>', '<C-w><C-l>')
+
+-- Python settings
+
+cmd([[
+autocmd FileType python setlocal 
+\ tabstop=2
+\ softtabstop=2
+\ shiftwidth=2
+\ textwidth=80
+\ smarttab
+\ expandtab
+]])
+
 
 -- Colorscheme
 
@@ -85,8 +101,8 @@ local t = function(str)
 end
 
 local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+  local col = vim.fn.col('.') - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
 end
 
 -- Use (s-)tab to:
@@ -142,8 +158,8 @@ map('n', '<leader>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 -- Blankline
 
 require("indent_blankline").setup {
-    char = "|",
-    buftype_exclude = {"terminal"}
+  char = "|",
+  buftype_exclude = {"terminal"}
 }
 
 -- Git
@@ -164,12 +180,12 @@ local utils = require('telescope.utils')
 local builtin = require('telescope.builtin')
 
 project_files = function()
-    local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' }) 
-    if ret == 0 then 
-        builtin.git_files() 
-    else 
-        builtin.find_files() 
-    end 
+  local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' }) 
+  if ret == 0 then 
+    builtin.git_files() 
+  else 
+    builtin.find_files() 
+  end 
 end
 
 map('n', '<C-p>', '<cmd>lua project_files()<CR>')
