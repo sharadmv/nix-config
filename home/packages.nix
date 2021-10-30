@@ -1,4 +1,4 @@
-{ pkgs, fonts, picom, rofi, vim, xmonad }:
+{ pkgs, fonts, picom, rofi, xmonad }:
 let
   dex = pkgs.callPackage ../../workspace/hack/dex-lang { };
 in

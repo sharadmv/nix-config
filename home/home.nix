@@ -7,7 +7,6 @@ let
   homeDir = "/home/${user}";
   configDir = "config";
 
-  myVim = (pkgs.callPackage ./vim {});
   myXMonad = (pkgs.callPackage ./wm/xmonad {});
   myFonts = pkgs.callPackage ./fonts { inherit pkgs; };
   myRofi = (pkgs.callPackage ./wm/rofi {});
@@ -49,7 +48,6 @@ in
     picom = myPicom;
     pkgs = pkgs;
     rofi = myRofi;
-    vim = myVim;
     xmonad = myXMonad;
   };
 
@@ -96,6 +94,9 @@ in
   };
   home.file = {
     ".face".source = ./wallpapers/bird.png;
+  };
+  home.file = {
+    ".direnvrc".source = ./direnvrc;
   };
   home.file = {
     ".config/htop/htoprc".source = ./htop/htoprc;
