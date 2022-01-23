@@ -21,8 +21,7 @@ utils.map('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>')
 utils.map('n', '<leader>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 -- Telescope
-local telescope = require('plugins/telescope')
-utils.map('n', '<C-p>', '<cmd>lua telescope.project_files()<CR>')
+utils.map('n', '<C-p>', '<cmd>lua require("plugins/telescope").project_files()<CR>')
 utils.map('n', '<C-i>', '<cmd>Telescope live_grep<CR>')
 utils.map('n', '<C-u>', '<cmd>Telescope buffers<CR>')
 

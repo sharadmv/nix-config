@@ -12,8 +12,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "adi1090x";
     repo = "rofi";
-    rev = "9c4093c665326bb08d6affc7e16d18d8f25c4452";
-    sha256 = "07b2hb12hibsqmqb16wg1hyaqkydg0bjg59q76ajgq7r8v6n0f1j";
+    rev = "aba9eb3d1ad67ade0fdb89b7e4998e69c873a86f";
+    sha256 = "R1RegMYiUrKYKiFD1esU3n4YahFlD0XGwflL7ls5rtc=";
   };
   postConfigure = ''
     rm 1080p/launchers/colorful/launcher.sh

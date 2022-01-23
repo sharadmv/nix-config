@@ -1,7 +1,4 @@
 { pkgs, fonts, picom, rofi, xmonad }:
-let
-  dex = pkgs.callPackage ../../workspace/hack/dex-lang { };
-in
 with pkgs; [
     _1password
     _1password-gui
@@ -12,6 +9,7 @@ with pkgs; [
     betterlockscreen
     bind
     cava
+    ckan
     discord
     (dwarf-fortress-packages.dwarf-fortress-full.override {
       theme = "spacefox";
@@ -39,6 +37,7 @@ with pkgs; [
     lmms
     maim
     material-design-icons
+    minecraft
     ncdu
     neofetch
     nodejs
@@ -55,8 +54,6 @@ with pkgs; [
     sl
     spotify
     unzip
-    wineWowPackages.staging
-    (winetricks.override { wine = wineWowPackages.staging; })
     vim
     vlc
     xautolock

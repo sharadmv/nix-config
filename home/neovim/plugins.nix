@@ -58,22 +58,30 @@ let
     src = ../../../workspace/hack/dex-vim;
   };
 in
-with pkgs.vimPlugins;
-[
-  ayu-vim
-  fzf-vim
-  gitsigns-nvim
-  indent-blankline-nvim
-  kommentary
-  nvim-compe
-  nvim-lspconfig
-  nvim-tree-lua
-  nvim-treesitter
-  nvim-web-devicons
-  plenary-nvim
-  telescope-nvim
-  vim-beancount
-  vim-nix
-  vista-vim
+  with pkgs.vimPlugins;
+  [
+    ayu-vim
+    cmp-nvim-lsp
+    fzf-vim
+    gitsigns-nvim
+    indent-blankline-nvim
+    kommentary
+    nvim-cmp
+    nvim-lspconfig
+    nvim-tree-lua
+    (nvim-treesitter.withPlugins (
+      plugins: with plugins; [
+        tree-sitter-nix
+        tree-sitter-python
+      ]
+      ))
+    nvim-web-devicons
+    plenary-nvim
+    telescope-nvim
+    # trouble-nvim
+    barbar-nvim
+    vim-beancount
+    vim-nix
+    vista-vim
 ]
 

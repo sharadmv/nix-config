@@ -1,7 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, nixpkgs, ... }:
 
 let
@@ -43,7 +42,7 @@ in
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = false;
 
   # Enable vulkan
   hardware.opengl.driSupport32Bit = true;
@@ -55,8 +54,6 @@ in
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  nix.allowedUsers = [ "@wheel" ];
-  nix.useSandbox = false;
   users.users.sharad = {
     isNormalUser = true;
     shell = pkgs.fish;
@@ -100,6 +97,7 @@ in
     steam-run-native
     tmux
     vim
+    gcc
     wget
   ];
 
@@ -141,11 +139,17 @@ in
     videoDrivers = ["nvidia"];
   };
 
-  # nix-direnv config
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-  '';
+  nix = {
+    autoOptimiseStore = true;
+    allowedUsers = [ "@wheel" ];
+    useSandbox = true;
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+      experimental-features = nix-command flakes
+    '';
+  };
 
   
   powerManagement = { 
@@ -155,7 +159,9 @@ in
   #powerManagement.powertop.enable = true;
 
   # List services that you want to enable:
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+  };
   services.blueman.enable = true;
 
   # Enable the OpenSSH daemon.
