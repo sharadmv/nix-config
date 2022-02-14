@@ -26,8 +26,8 @@ utils.map('n', '<C-i>', '<cmd>Telescope live_grep<CR>')
 utils.map('n', '<C-u>', '<cmd>Telescope buffers<CR>')
 
 -- Vista
-utils.map('n', '<C-y>', '<cmd>Vista!!<CR>')
-utils.map('n', '<M-/>', '<cmd>Vista finder<CR>')
+utils.map('n', '<C-y>', '<cmd>Vista finder<CR>')
+utils.map('n', '<M-/>', '<cmd>Vista!!<CR>')
 
 -- Tree
 utils.map('n', '<C-e>', ':NvimTreeToggle<CR>')

@@ -12,6 +12,9 @@ in
   boot.extraModulePackages = [
     rtl8812au
   ];
+  boot.kernelParams = [
+    "quiet"
+  ];
 
   # Bluetooth
   hardware.bluetooth.enable = true;

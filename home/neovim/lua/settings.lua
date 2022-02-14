@@ -50,5 +50,6 @@ autocmd FileType pyrex setlocal
 
 -- Colorscheme
 
-g["ayucolor"] = "mirage"
-cmd 'colorscheme ayu'
+--[[ g["ayucolor"] = "mirage"
+cmd 'colorscheme ayu' ]]
+cmd 'colorscheme kanagawa'
