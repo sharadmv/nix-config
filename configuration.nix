@@ -4,25 +4,16 @@
 { config, pkgs, nixpkgs, ... }:
 
 let
-  rtl8812au = config.boot.kernelPackages.callPackage drivers/wifi/rtl8812au.nix {};
   sddm-theme = pkgs.callPackage dm/theme.nix {};
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.plymouth.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.extraModulePackages = [
-    rtl8812au
-  ];
-  boot.kernelModules = [ "8812au" ];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -32,7 +23,6 @@ in
   # replicates the default behaviour.
   networking.enableIPv6 = false;
   networking.networkmanager.enable = true;
-  networking.hostName = "rocinante";
   networking.useDHCP = false;
   networking.interfaces.enp3s0.useDHCP = true;
 
@@ -69,20 +59,13 @@ in
   programs.nm-applet.enable = true;
   programs.fish.enable = true;
   programs.steam.enable = true;
-
   nixpkgs.config.allowUnfree = true;
-  #nixpkgs.config.packageOverrides = (super: {
-  #  steam = (super.steam.override {
-  #    extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
-  #  });
-  #});
 
-  environment.systemPackages = with unstable; [
+  environment.systemPackages = with pkgs; [
     adwaita-qt
     feh
     git
     gmrun
-    gnome3.adwaita-icon-theme
     gnome3.adwaita-icon-theme
     gnumake
     hicolor-icon-theme
@@ -140,9 +123,11 @@ in
   };
 
   nix = {
-    autoOptimiseStore = true;
-    allowedUsers = [ "@wheel" ];
-    useSandbox = true;
+    settings = {
+      auto-optimise-store = true;
+      allowed-users = [ "@wheel" ];
+      sandbox = true;
+    };
     package = pkgs.nixFlakes;
     extraOptions = ''
       keep-outputs = true
@@ -151,18 +136,12 @@ in
     '';
   };
 
+
   
   powerManagement = { 
     enable = true; 
     cpuFreqGovernor = "ondemand"; 
   };
-  #powerManagement.powertop.enable = true;
-
-  # List services that you want to enable:
-  hardware.bluetooth = {
-    enable = true;
-  };
-  services.blueman.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -181,6 +160,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.09"; # Did you read the comment?
-
 }
-

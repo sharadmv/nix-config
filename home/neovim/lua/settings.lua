@@ -38,6 +38,16 @@ autocmd FileType python setlocal
 \ expandtab
 ]])
 
+cmd([[
+autocmd FileType pyrex setlocal 
+\ tabstop=2
+\ softtabstop=2
+\ shiftwidth=2
+\ textwidth=80
+\ smarttab
+\ expandtab
+]])
+
 -- Colorscheme
 
 g["ayucolor"] = "mirage"

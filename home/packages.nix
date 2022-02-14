@@ -11,9 +11,6 @@ with pkgs; [
     cava
     ckan
     discord
-    (dwarf-fortress-packages.dwarf-fortress-full.override {
-      theme = "spacefox";
-    })
     firefox
     fish
     font-awesome-ttf
@@ -25,12 +22,13 @@ with pkgs; [
     gnome3.seahorse
     gnome3.gnome-calendar
     gnome3.gnome-screenshot
-    gnome3.networkmanagerapplet
+    networkmanagerapplet
     google-chrome
     gping
     haskell-language-server
     htop
     imagemagick
+    inkscape
     jq
     killall
     libnotify
