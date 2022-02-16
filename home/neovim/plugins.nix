@@ -10,6 +10,16 @@ let
       sha256 = "EIHL04yWRlvLhCyeOsI15Fx+xhOMFGYcHrlmAjxD99s=";
     };
   };
+  truezen-nvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "truezen.nvim";
+    version = "2022-02-15";
+    src = pkgs.fetchFromGitHub {
+      owner = "pocco81";
+      repo = "truezen.nvim";
+      rev = "508b977d71650da5c9243698614a9a1416f116d4";
+      sha256 = "fc0/aBRumF9Gn1pY6WhU/LHZH9hXaBULRYIO9GrwJGs=";
+    };
+  };
 in
 with pkgs.vimPlugins; [
   ayu-vim
@@ -36,6 +46,7 @@ with pkgs.vimPlugins; [
   vim-beancount
   vim-nix
   vista-vim
+  truezen-nvim
   trouble-nvim
 ]
 
