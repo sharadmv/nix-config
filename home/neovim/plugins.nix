@@ -48,5 +48,6 @@ with pkgs.vimPlugins; [
   vista-vim
   truezen-nvim
   trouble-nvim
+  which-key-nvim
 ]
 
